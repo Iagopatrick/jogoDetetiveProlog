@@ -15,6 +15,15 @@ crime(aleatorio, aleatorio).
     palpite dele foi = dona_Violeta
                        corda
     caso ele digite a pessoa errada, ele já deve corrigir, vai ser melhor do que ter que ficar repetindo o palpite toda hora
+    ATT 16/06 - mais tarde
+    pretendo colocar o status como uma forma de saber se o crime das salas foram resolvidos, isso afeta:
+    as descrições, como estou fazendo uma história narrativa, algumas coisas precisam mudar na descrição.
+    Além disso, é possível verificar se o jogador resolveu todos os crimes antes de conseguir avançar no jogo.
+
+    Outro tópico, preciso fazer uma lista de dicas, conforme o nome do personagem aparecer, pra tentar deixar mais dinâmico a advinhações
+    Falta melhorar a formatação do texto.
+
+
 */
 /*Listando os personagens e armas de cada sala*/
 personagem([a1, sr_Marinho, dona_Branca, mordomo_James]).
@@ -42,27 +51,38 @@ armas(Posicao) :-
     write(Resto).
 
 palpite(Onde_estou) :-
-    personagem([Onde_estou|Personagens]),
-    arma([Onde_estou|Armas]),
+    personagem([Onde_estou|Personagens]), nl,
+    arma([Onde_estou|Armas]), nl,
     random_member(X, Personagens),
     random_member(Y, Armas),
     verifica_palpite(X, Y).
 
 
+verifica_arma(X):-
+    read(Arma),
+    (Arma = X->
+        write("Policial: -Tudo certo por aqui detetive. obrigado pelo seu trabalho. Rapazes, podem levar.")
+    ).
 
 verifica_palpite(X, Y):-
     write("Diante do momento de ansiedade, você responde quem cometeu o crime: "),
+    ondeEstou(Onde_estou),
     read(Personagem),
-    write("Todos ficam olham assustados e você fala com qual arma: "),
-    read(Arma),
-    (Personagem = X, Arma = Y ->
-        write(Personagem), write(" Ficou muito nervoso(a) e gritou "), 
-        fala(Personagem), 
-        write("Policial: -Tudo certo por aqui detetive. obrigado pelo seu trabalho. Rapazes, podem levar.");
+    (Personagem = X ->
+        write("Você acertou o culpado, você tem certeza!"),
+        write("Todos ficam olham assustados e você fala com qual arma: "),
+        read(Arma),
+        (Arma = Y -> 
+            write(Personagem), write(" ficou muito nervoso(a) e gritou "), 
+            fala(Personagem), 
+            write("Policial: -Tudo certo por aqui detetive. obrigado pelo seu trabalho. Rapazes, podem levar.");
 
-        write("Isso não me parece certo..."),
-        write("Lembrando das opções que você tem: "),
-        modoDetetive,
+            write("Você olha novamente para as armas no local do crime, algo lhe diz que "), write(Arma), write(" não é a escolha certa..."),
+            armas(Onde_estou), 
+            verifica_arma(Y)
+        );
+        write("Você iria falar "), write(Personagem), write(" mas algo te alertou que aquela não é a reposta..."),
+        personagens(Onde_estou),
         verifica_palpite(X, Y)
     ).
 
@@ -74,7 +94,7 @@ modoDetetive:-
     nl, !.
 
 modoDetetive:-
-    write("Não há nada para ver aqui."), nl.
+    write("Não há nada para ver aqui."), nl, fail.
     
 jogo:-
     write('Bem-vindo ao jogo do detetive.'),
@@ -202,24 +222,37 @@ descricao(b1):-
     "As coisas estão dificéis, não sabemos até onde ele vai pra tentar desvender todo o mistério da familia Yellow... Tenho medo do que ele pode fazer...
     Ass. R.
     Você pega a carta e guarda no bolso do casaco.
-    Agora você decide, voltar ou seguir para a sala? (b\e)"'), nl.
+    Agora você decide, voltar ou seguir para a sala? (b-e)"'), nl.
 descricao(b2):-
-    write('Você chega no hall. Olhando pra frente você percebe que tem um acesso para outro cômodo(d), que você julgou ser a cozinha.
+    write('Você chega no hall. Olhando pra frente você percebe que tem um acesso para outro cômodo (d), que você julgou ser a cozinha.
     Seguindo acima (c) há um quadro grande e um acesso, mas você precisa chegar mais perto caso queira ver.
     Abaixo (b) há um acesso e uma janela bem grande que dá para ver o quintal da casa'), nl.
 descricao(b3):-
     write('Você chega mais perto da janela, não consegue ver o quintal direito por causa da chuva. Há uma pequena mancha de gordura, mas não importa, você apenas limpa a pequena mancha.
     A sua direita há uma entrada para o salão de jogos. Você vê a movimentação dos policiais dentro da sala e então decide... (d)'), nl.
 descricao(c1):-
-    write('Cozinha'), nl.
+    write('Ao entrar na cozinha, concentrado no papel, o policial Vin esbarra em você e derruba o seu distintivo.
+    -Perdão Detetive, não te vi entrar! - diz ele com os olhos um pouco assustado, talvez pela cena que viu ou talvez por ter se esbarrado em algo sem ver.
+    Você se abaixa para pegar o distintivo e pega o papel ao mesmo tempo, quando lê:
+    9823-... Não dava para ver o resto, estava borrado, Vin pergunta:
+    -O que é isso detetive?
+    -Você guarda o papel e olha para a cena do crime.
+    O corpo do chefe de cozinha estava estirado no chão, mas nenhuma poça de sangue, era dificil saber o que aconteceu, mas vocÊ sabe...'), nl.
 descricao(c2):-
-    write(''), nl.
+    write('Você olha adiante e vê o corredor (d) que é familiar para você e ao mesmo tempo você sente um frio na espinha. Ao desviar o olhar você vê a porta que dá acesso a cozinha (c).
+    Ao olhar para a pequena janela que tem na porta você vê um pedaço de um papel, debaixo de um armário de cozinha que fica no chão, provavelmente passou despercebido pelos outros.
+    Você então...(c)'), nl.
 descricao(c3):-
-    write('Salão de Jogos'), nl.
+    write('Ao entrar no salão de jogos algo te chama muita a atenção, havia uma pequena marca de um movel arrastado, ao seguir a pequena pista você vê uma máquina de caça-níquel.
+    Ao olhar a cena do crime, a mesa principal estava manchada de sangue e molhada por algo que parecia bebidas alcoolicas e, debaixo da mesa, havia um homem, grisalho, 53 anos.
+    Sem vida, o corpo inerte, manchas de sangue apenas na parte de cima da mesa.'), nl.
 descricao(d2):-
-    write('Corredor'), nl.
+    write('Você abre a porta do corredor. Ele parece maior do que é, você olha a sua direita e vê o jardim, dessa vez uma árvore bem grande, balançando por conta do temporal lá fora.
+    Você só tem uma opção... Seguir em frente, mas algo parece que não quer deixar você seguir, um sentimento estranho... Mas, você precisa ir (d)'), nl.
 descricao(e2):-
-    write('Corredor'), nl.
+    write('No final do corredor você tem pequenos lapsos de já ter estado lá, já ter feito esse caminho antes. De fato, você já veio outra vez aqui, num dia claro, para
+    conversar com sr... você não se lembra, ou se recusa lembrar? Mas não era isso, era outra coisa, outro dia... Você chega até o final do corredor, você precisa
+    avançar (d).'), nl.
 descricao(f1):-
     write('Conservatorio'), nl.
 descricao(f2):-
