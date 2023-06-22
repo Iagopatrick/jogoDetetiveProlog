@@ -40,7 +40,10 @@ busca_Lista(Elemento,[_|Cauda]):-
     ATT 19/06
     É bom colocar o ! quando eu quero que não seja buscado outros possíveis resultados para as funções que tenho. Por isso tava dando o problema de esperar uma
     entrada no teclado quando descrevia o local. Aparentemente, existe um problema na questão da descrição com a verificação da visita. Ele salta de x2 para b2
-    porque nao cosnegue descrever os outros locais(teoria).
+    porque nao consegue descrever os outros locais(teoria).
+
+    21/06
+    Talvez a mudança de variáveis seja melhor dentro de funções próprias para isso.
 
 */
 /*Listando os personagens e armas de cada sala*/
