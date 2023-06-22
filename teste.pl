@@ -37,6 +37,10 @@ busca_Lista(Elemento,[_|Cauda]):-
     Não consegui fazer a relação para impedir o jogador de entrar no corredor caso nao tenha resolvido todos os crimes. Além disso, atualizar o status do 'visitou' quebrou o programa,
     o jogador estava dando 'saltos', saia de a2 para g2 direto.
 
+    ATT 19/06
+    É bom colocar o ! quando eu quero que não seja buscado outros possíveis resultados para as funções que tenho. Por isso tava dando o problema de esperar uma
+    entrada no teclado quando descrevia o local. Aparentemente, existe um problema na questão da descrição com a verificação da visita. Ele salta de x2 para b2
+    porque nao cosnegue descrever os outros locais(teoria).
 
 */
 /*Listando os personagens e armas de cada sala*/
@@ -175,13 +179,13 @@ status_Crime(a1, nao_Resolvido).
 status_Crime(a3, nao_Resolvido).
 status_Crime(c1, nao_Resolvido).
 status_Crime(c3, nao_Resolvido).
+
 status_Crime(f1, nao_Resolvido).
 status_Crime(f3, nao_Resolvido).
+
 status_Crime(h2, nao_Resolvido).
 
-status_Fase1([nao_Resolvido, nao_Resolvido, nao_Resolvido, nao_Resolvido]).
 
-status_Fase2([nao_Resolvido, nao_Resolvido]).
 
 
 visitou(x2, nao).
@@ -205,6 +209,11 @@ visitou(g3, nao).
 visitou(h2, nao).
 
 
+/*confere_Visita(Posicao):-
+    visitou(Posicao, X),
+    (X = nao ->
+        retract()
+    )*/
 
 /*Regra de movimentação*/
 c:- movimentacao(c).
@@ -219,14 +228,14 @@ movimentacao(X):-
     caminho(Onde_estou, X, Vou_aqui),
     retract(ondeEstou(Onde_estou)),
     assert(ondeEstou(Vou_aqui)),
+    descreva,
+    nl, !.
     /*visitou(Onde_estou, Y),
     (Y = nao ->
-        retract(visitou(Onde_estou, nao)),
+        retract(visitou(Onde_estou, Y)),
         assert(visitou(Onde_estou, sim));
-        write("OK!")
+        true
     ),*/
-    descreva,
-    nl.
 
 movimentacao(_):-
     write('Algo lhe diz que bater em uma parede não é a melhor direção para andar...'), nl, fail.
@@ -234,7 +243,7 @@ movimentacao(_):-
 /*Descrições do ambiente e jogo*/
 descreva:- 
     ondeEstou(Onde_estou),
-    descricao(Onde_estou).
+    descricao(Onde_estou), !.
 
 descricao(x2):-
     write('Chove forte e faz frio nesta noite. Você está com seu casaco usual e encara de longe a mansão dos senhores. Uma noite catastrófica e só você pode resolver o que aconteceu.'),
@@ -381,8 +390,9 @@ tabuleiro:-
         f1 : conservatorio
         f3 : cozinha
         h2 : escritorio
-    "), ondeEstou(X),
-    write("aonde você está: "), write(X), nl.
+    "), 
+    ondeEstou(X),
+    write("aonde você está: "), write(X), nl, !.
 
     
 
