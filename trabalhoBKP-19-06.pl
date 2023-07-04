@@ -152,6 +152,7 @@ caminho(c1, b, c2).
 caminho(c2, e, b2).
 
 caminho(c2, d, d2).
+caminho(c2, c, c3).
 
 caminho(c3, e, b3).
 caminho(c3, ps, a1).
