@@ -2,12 +2,6 @@
 ondeEstou(x2).
 
 
-busca_Lista(Elemento, [Elemento|_]).
-busca_Lista(Elemento,[_|Cauda]):-
-    busca_Lista(Elemento, Cauda).
-
-
-
 /* personagens([sr_Marinho, dona_Branca, srta_Rosa, mordomo_James, dona_Violeta, sergio_Soturno, sargento_Bigode, tony_Gourmet]).
  armas([corda, revolver, candelabro, soco_ingles, cano, chave_ingles, faca, pe_de_cabra]).
  a1 = biblioteca
@@ -17,8 +11,8 @@ busca_Lista(Elemento,[_|Cauda]):-
  f1 = conservatorio
  f3 = cozinha
  h2 = escritorio
-
 */
+
 /*Listando os personagens e armas de cada sala*/
 personagem([a1, sr_Marinho, dona_Branca, mordomo_James]).
 personagem([a3, srta_Rosa, dona_Violeta, sergio_Soturno]).
@@ -203,7 +197,7 @@ movimentacao(X):-
     nl, !.
 
 movimentacao(_):-
-    write('Algo lhe diz que bater em uma parede não é a melhor direção para andar...'), nl, fail.
+    write('Algo lhe diz que essa não é a melhor direção para ir...'), nl, fail.
 
 /*Descrições do ambiente e jogo*/
 descreva:- 
@@ -355,23 +349,23 @@ tabuleiro:-
 
 
 fala(sr_Marinho):-
-    write("-ABSURDO! EU JAMAIS FARIA ALGO DESSE TIPO!! VOCÊ VAI ME PAGAR DETETIVE! VOCÊ ME PAGA!!!! - Ele grita e fica vermelho, mas não importa mais."), nl.
+    write("Sr.Marinho: -ABSURDO! EU JAMAIS FARIA ALGO DESSE TIPO!! VOCÊ VAI ME PAGAR DETETIVE! VOCÊ ME PAGA!!!! - Ele grita e fica vermelho, mas não importa mais."), nl.
 fala(dona_Branca):-
-    write("- Você está equivocado, isso é... isso é um absurdo!."), nl.
+    write("Dona Brana: -Você está equivocado, isso é... isso é um absurdo!."), nl.
 fala(srta_Rosa):-
-    write("- Não se preocupe Detetive... Eu irei voltar e, bem... Digamos que sou vingativa, ainda mais com uma injustiça, cuidado. - Ela sorri friamente e estende os braços para ser presa."), nl.
+    write("Srta.Rosa: -Não se preocupe Detetive... Eu irei voltar e, bem... Digamos que sou vingativa, ainda mais com uma injustiça, cuidado. - Ela sorri friamente e estende os braços para ser presa."), nl.
 fala(mordomo_James):-
-    write("- Mas senhor... eu sirvo essa família há 30 anos, não faria sentido algum eu fazer algo desse tipo, NENHUM!."), nl.
+    write("Mordomo James: -Mas senhor... eu sirvo essa família há 30 anos, não faria sentido algum eu fazer algo desse tipo, NENHUM!."), nl.
 fala(dona_Violeta):-
     write("Violeta lhe olha de cima abaixo e desfere:
-        - Cuidado detetive, alguns erros podem ser irreparáveis depois de cometidos e, bem, eu sei que não serei presa..."), nl.
+        Violeta: -Cuidado detetive, alguns erros podem ser irreparáveis depois de cometidos e, bem, eu sei que não serei presa..."), nl.
 fala(sergio_Soturno):-
-    write("Você está errado, eu tirarei seu crachá de detetive assim que for liberado. Além disso, você não vai mais ser empregado e muito menos terá um nome de respeito. - Ele cospe no chão à sua frente."), nl.
+    write("Sérgio Soturno: -Você está errado, eu tirarei seu crachá de detetive assim que for liberado. Além disso, você não vai mais ser empregado e muito menos terá um nome de respeito. - Ele cospe no chão à sua frente."), nl.
 fala(sargento_Bigode):-
     write("O sargento fica atônito:
-    - Como assim? Você sabe quem eu sou?? Farei da sua vida um INFERNO! Se prepare, imbecil!"), nl.
+    Sargento Bigode: -Como assim? Você sabe quem eu sou?? Farei da sua vida um INFERNO! Se prepare, imbecil!"), nl.
 fala(tony_Gourmet):-
-    write("Queria enteder daonde você tirou isso, claramente isso está errado e eu vou provar. Você tem inveja, pode adimitir, ninguém consegue ser igual à mim, mas isso foi longe demais!"), nl.
+    write("Tony Gourmet: -Queria enteder daonde você tirou isso, claramente isso está errado e eu vou provar. Você tem inveja, pode adimitir, ninguém consegue ser igual à mim, mas isso foi longe demais!"), nl.
 
 
 /*Dicas - assassinos*/
@@ -393,14 +387,14 @@ dica(tony_Gourmet):-
     write("Alguém que não enxerga a si, longe da realidade, ego inflado..."), nl.
 
  
-/*Dicas - armas armas([corda, revolver, candelabro, soco_ingles, cano, chave_ingles, faca, pe_de_cabra]). */
+/*Dicas - armas*/
 
 dica(corda):-
     write("Marcas no pescoço, provavelmente enforcamento."), nl.
 dica(revolver):-
-    write("Furo no peito, provavelmente de um projétil"), nl.
+    write("Furo no peito, provavelmente de um projétil."), nl.
 dica(candelabro):-
-    write(""), nl.
+    write("Um pedaço do que parece ser um suporte de vela ao lado do corpo."), nl.
 dica(soco_ingles):-
     write("Hematomas no rosto e na barriga, parece ter sido uma pancada pesada."), nl.
 dica(cano):-
